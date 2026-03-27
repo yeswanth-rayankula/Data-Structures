@@ -1,3 +1,6 @@
+
+// similar problem like merge intervals
+
 class Solution {
 public:
     static bool cmp(pair<int,int>& a, pair<int,int>& b) {
@@ -20,7 +23,7 @@ public:
         for (auto &it : mp) {
             vec.push_back(it.second);
         }
-
+         
         sort(vec.begin(), vec.end(), cmp);
 
         vector<int> ans;
