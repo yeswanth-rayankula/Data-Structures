@@ -1,0 +1,36 @@
+
+// Time Complexity O(n^2)
+// Space Complexity O(n)      
+//                 
+class Solution {
+public:
+
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        int n = isConnected.size(),count=0;
+        vector<bool> vis(n,false);
+        for(int i=0;i<n;i++)
+        {
+            if(vis[i] == false)
+            {
+                queue<int> q;
+                q.push(i);
+                while(!q.empty())
+                {
+                    int a=q.front();
+                    q.pop();
+                    vis[a]=true;
+                    cout<<a<<" ";
+                    for(int j=0;j<vis.size();j++)
+                    {
+                        if(isConnected[a][j]==1 && a!=j && vis[j]==false)
+                        {
+                            q.push(j);
+                        }
+                    }
+                }
+                count++;
+            }
+        }
+        return count;
+    }
+};

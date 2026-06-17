@@ -1,0 +1,49 @@
+// TC O(N^3)
+// sc O(N)
+
+class Solution {
+public:
+    bool calc(int i,int j,vector<vector<int>>& bombs)
+    {
+        int a1= bombs[i][0];
+        int b1= bombs[i][1];
+        int r1= bombs[i][2];
+
+        int a2= bombs[j][0];
+        int b2= bombs[j][1];
+        int r2= bombs[j][2];
+
+      return ( 1LL * abs(a1 - a2) * abs(a1 - a2) +
+            1LL * abs(b1 - b2) * abs(b1 - b2) )  <= 1LL *r1 * r1;
+    }
+    int maximumDetonation(vector<vector<int>>& bombs) {
+        
+        int n=bombs.size(),sol=0;
+        
+        for(int i=0;i<n;i++)
+        {
+            vector<bool> vis(n,false);
+            int c=0;
+            queue<long long> q;
+            q.push(i);
+            while(!q.empty())
+            {
+                int p=q.front();
+                q.pop();
+                    if(vis[p])
+                        continue;
+                    c++;
+                    vis[p]=true;
+                    for(int j=0;j<n;j++)
+                    {
+                        if(vis[j]==0 && p!=j && calc(p,j,bombs))
+                        {
+                            q.push(j);
+                        }
+                    }
+                }
+                sol=max(sol,c);
+        }
+        return sol;
+    }
+};
