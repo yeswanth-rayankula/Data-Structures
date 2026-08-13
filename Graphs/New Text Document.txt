@@ -1,46 +1,54 @@
+// Time complexity O(N*L*L)
+// Space complexity O(N*L)
+// N-> No of words
+// L-> Length of word
+
 class Solution {
 public:
-    vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
-        int n=mat.size(),m=mat[0].size();
-        queue<pair<int,int>> q;
-        vector<vector<bool>> vis(n,vector<bool>(m,false));
-        for(int i=0;i<n;i++)
-        {
-            for(int j=0;j<m;j++)
-            {
-                if(mat[i][j]==0)
-                {
-                    vis[i][j]=true;
-                    q.push({i,j});
-                }
-            }
-        }
-        int z=0;
-        int a1[]={1,0,0,-1};
-        int b1[]={0,-1,1,0};
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
         
+
+        unordered_map<string,int> mp;
+        int ans = 1;
+        for(auto i: wordList)
+        {
+            mp[i]++;
+        }
+        if(mp[endWord]==0)
+            return 0;
+        queue<string> q;
+        q.push(beginWord);
+
+
+
         while(!q.empty())
         {
-            int t=q.size();
-            cout<<t;
-            while(t--)
+            int n=q.size();
+            
+            while(n--)
             {
-                auto[c,d]=q.front();
-                mat[c][d]=z;
+                string a=q.front();
                 q.pop();
-                for(int i=0;i<4;i++)
+
+                for(int i=0;i<a.size();i++)
                 {
-                    int e=c+a1[i];
-                    int f=d+b1[i];
-                    if(e>=0 && f>=0 && e<n && f<m && vis[e][f]==false)
+                    char ch=a[i];
+                    for(char j='a';j<='z';j++)
                     {
-                        vis[e][f]=true;
-                        q.push({e,f});
+                        a[i]=j;
+                        if(a==endWord)
+                            return ans+1;
+                        if(mp[a]>0)
+                        {
+                            q.push(a);
+                            mp[a]--;
+                        }
                     }
+                    a[i]=ch;
                 }
             }
-            z++;
+            ans++;
         }
-        return mat;
+        return 0;
     }
 };
