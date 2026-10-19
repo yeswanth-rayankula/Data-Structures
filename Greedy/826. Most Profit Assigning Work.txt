@@ -1,0 +1,29 @@
+class Solution {
+public:
+    static bool stc(pair<int,int>& a, pair<int,int>& b)
+    {
+        return a.first<b.first;
+    }
+    int maxProfitAssignment(vector<int>& difficulty, vector<int>& profit, vector<int>& worker) {
+        
+        vector<pair<int,int>> temp;
+        for(int i=0;i<difficulty.size();i++)
+        {
+            temp.push_back({difficulty[i],profit[i]});
+        }
+        sort(temp.begin(),temp.end(),stc);
+        sort(worker.begin(),worker.end());
+        int j=0, sol=0, maxProfit = 0;
+
+        for(int i=0;i<worker.size();i++)
+        {
+            while(j<difficulty.size() && temp[j].first<=worker[i])
+            {
+                maxProfit = max(maxProfit, temp[j].second);
+                j++;
+            }
+            sol+=maxProfit;
+        }
+        return sol;
+    }
+};
